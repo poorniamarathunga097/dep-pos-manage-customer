@@ -42,7 +42,9 @@ function init(){
 // Todo: add all event listeners and handlers here
 
 var saveBtn = document.getElementById('btn-save');
-saveBtn.addEventListener('click',validateFields);
+/*saveBtn.addEventListener('click',validateFields);*/
+var newRow;
+var row = 1;
 
 function validateFields(){
     var id = document.getElementById('txt-id').value;
@@ -57,7 +59,11 @@ function validateFields(){
     var validName = false;
     var validAddress = false;
 
+    var regex1 = /[{4}\d]+$/;
     if(id.length === 0){
+        txtId.style.border = '2px solid red';
+        return;
+    }else if(regex1.test(id) === false){
         txtId.style.border = '2px solid red';
         return;
     }else if(id.length < 3){
@@ -68,8 +74,13 @@ function validateFields(){
         validId = true;
     }
 
+    var regex2 = /^[a-zA-Z\s]+$/;
     if(name.length === 0){
         txtName.style.border = '2px solid red';
+        return;
+    }else if(regex2.test(name) === false) {
+        txtName.style.border = '2px solid red';
+        alert('regex');
         return;
     }else if(name.length < 3){
         txtName.style.border = '2px solid red';
@@ -91,11 +102,60 @@ function validateFields(){
     }
 
     if(validId || validName || validAddress){
-      alert("Wade Hari kelle");
+        var display = document.getElementById('tbl-customers');
+
+        newRow = display.insertRow(row);
+        newRow.className = 'tbl-row';
+
+        var tId = newRow.insertCell(0);
+        var tName = newRow.insertCell(1);
+        var tAddress = newRow.insertCell(2);
+        var tDelete = newRow.insertCell(3);
+
+        tId.innerHTML = id;
+        tName.innerHTML = name;
+        tAddress.innerHTML = address;
+        tDelete.innerHTML = '<img onclick="removeRow(this)" src="img/trash.png" id="delete-image">';
+
+        row++;
+
+        var table = document.getElementById('tbl-customers');
+
+        for(var i = 0; i < table.rows.length; i++){
+            table.rows[i].onclick = function (){
+                document.getElementById("txt-id").value = this.cells[0].innerHTML;
+                document.getElementById("txt-name").value = this.cells[1].innerHTML;
+                document.getElementById("txt-address").value = this.cells[2].innerHTML;
+            }
+        }
+
+        /*for(var i = 0; i <table.rows.length; i++){
+            table.rows[i].onclick = function (){
+                rIndex = this.rowIndex;
+                console.log(rIndex);
+            }
+        }*/
     }
+
 }
+/*
+
+function removeRow(td){
+    if(confirm("Are you sure to delete the rocord?"))
+    var row = td.parentElement.parentElement;
+    document.getElementById('tbl-customers').deleteRow(row.rowIndex);
+}
+*/
+
+/*var tableRow = document.querySelector('#tbl-customers');
+tableRow.addEventListener('click', function(){
+    console.log('click');
+});*/
+
+
 
 // Todo: add all functions
 window.onload = function() {
     document.getElementById("txt-id").focus();
 };
+

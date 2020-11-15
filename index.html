@@ -19,7 +19,7 @@
 <main class="container">
     <div class="row">
         <div class="col-12 col-lg-4">
-            <form>
+            <form autocomplete="off">
                 <h3><i class="fas fa-user-tag"></i> Manage Customers</h3>
                 <div class="form-group">
                     <label for="txt-id">Customer ID</label>
@@ -38,7 +38,7 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <button class="btn btn-primary" id="btn-save" type="button">Save</button>
+                    <button class="btn btn-primary" id="btn-save" type="button" onclick="validateFields()">Save</button>
                     <button class="btn btn-danger" id="btn-clear" type="reset">Clear</button>
                 </div>
             </form>
@@ -50,7 +50,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
-                    <th></th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
